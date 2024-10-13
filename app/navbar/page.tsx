@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -43,7 +44,7 @@ export default function Navbar() {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <a href="/" className="flex items-center justify-center h-12 w-12 overflow-hidden rounded-3xl">
-            <img src="/logo3.png" alt="logo" className="w-full h-full object-cover"/>
+            <Image src="/logo3.png" alt="logo" width={48} height={48} className="object-cover"/>
           </a>
 
           {/* Desktop Navigation */}

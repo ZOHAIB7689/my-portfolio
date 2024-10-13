@@ -134,7 +134,7 @@ export default function About() {
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {achievements.map((achievement, index) => {
-            const [ref, inView] = useInView({
+            const { ref, inView } = useInView({
               triggerOnce: true,
               threshold: 0.1,
             });
