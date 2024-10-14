@@ -11,7 +11,7 @@ const achievements = [
   {
     title: "Full Stack Web Development Certification",
     description:
-      "Mastered MERN stack and modern web technologies through an intensive bootcamp.",
+      "Mastering MERN stack and modern web technologies through an intensive bootcamp.",
     icon: "🏆",
   },
   {
