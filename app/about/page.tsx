@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,7 @@ const achievements = [
 ];
 
 export default function About() {
-  const fadeInUpVariants = {
+  const fadeInUpVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
@@ -133,39 +133,9 @@ export default function About() {
           Key Achievements
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {achievements.map((achievement, index) => {
-            const { ref, inView } = useInView({
-              triggerOnce: true,
-              threshold: 0.1,
-            });
-
-            return (
-              <motion.div
-                key={index}
-                ref={ref}
-                initial="hidden"
-                animate={inView ? "visible" : "hidden"}
-                variants={fadeInUpVariants}
-                className="h-full"
-              >
-                <Card className="h-full bg-card/80 backdrop-blur-sm shadow-lg dark:hover:shadow-lime-400/10 dark:bg-gradient-to-t dark:from-gray-950 dark:to-red-950 dark:border-2 dark:border-t-red-700 dark:border-b-gray-700 hover:shadow-2xl transition-shadow duration-300">
-                  <CardHeader>
-                    <CardTitle className="flex items-center text-lg sm:text-xl font-bold">
-                      <span className="text-2xl sm:text-3xl mr-2">
-                        {achievement.icon}
-                      </span>
-                      {achievement.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm sm:text-base text-muted-foreground">
-                      {achievement.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          })}
+          {achievements.map((achievement, index) => (
+            <AchievementCard key={index} achievement={achievement} variants={fadeInUpVariants} />
+          ))}
         </div>
 
         <motion.div className="mt-16 text-center" variants={fadeInUpVariants}>
@@ -179,5 +149,49 @@ export default function About() {
         </motion.div>
       </div>
     </motion.main>
+  );
+}
+
+interface Achievement {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+interface AchievementCardProps {
+  achievement: Achievement;
+  variants: Variants;
+}
+
+function AchievementCard({ achievement, variants }: AchievementCardProps) {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={variants}
+      className="h-full"
+    >
+      <Card className="h-full bg-card/80 backdrop-blur-sm shadow-lg dark:hover:shadow-lime-400/10 dark:bg-gradient-to-t dark:from-gray-950 dark:to-red-950 dark:border-2 dark:border-t-red-700 dark:border-b-gray-700 hover:shadow-2xl transition-shadow duration-300">
+        <CardHeader>
+          <CardTitle className="flex items-center text-lg sm:text-xl font-bold">
+            <span className="text-2xl sm:text-3xl mr-2">
+              {achievement.icon}
+            </span>
+            {achievement.title}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm sm:text-base text-muted-foreground">
+            {achievement.description}
+          </p>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }
