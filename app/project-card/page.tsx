@@ -1,9 +1,9 @@
 "use client"
 
-import Image from 'next/image';
-import { Button } from "@/components/ui/button";
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 interface ProjectCardProps {
   title: string;
@@ -12,49 +12,73 @@ interface ProjectCardProps {
   projectUrl: string;
 }
 
-const cardVariants = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  hover: { scale: 1.03, transition: { duration: 0.2 } }
-};
-
-const imageVariants = {
-  hover: { scale: 1.05, transition: { duration: 0.2 } }
-};
-
 const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, imageSrc, projectUrl }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <motion.div
-      className="max-w-sm rounded-lg overflow-hidden shadow-lg dark:bg-gradient-to-l bg-slate-200 from-indigo-950 to-rose-950 transition-colors duration-300"
-      variants={cardVariants}
-      initial="initial"
-      animate="animate"
-      whileHover="hover"
+      className="bg-card dark:bg-gradient-to-l from-indigo-950 to-rose-950 border-2 border-emerald-950 shadow-lg rounded-lg overflow-hidden flex flex-col h-full"
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.3 }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
     >
-      <motion.div className="relative h-48 w-full overflow-hidden" variants={imageVariants}>
-        <Image
+      <div className="relative overflow-hidden">
+        <motion.img
           src={imageSrc}
           alt={title}
-          layout="fill"
-          objectFit="cover"
-          className="transition-transform duration-300"
+          className="w-full h-48 object-cover"
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.3 }}
         />
-      </motion.div>
-      <div className="px-6 py-4">
-        <h3 className="font-bold text-xl mb-2 text-gray-900 dark:text-gray-100">{title}</h3>
-        <p className="text-gray-700 dark:text-gray-300 text-base">
-          {description}
-        </p>
+        {isHovered && (
+          <motion.div
+            className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Button
+              asChild
+              variant="secondary"
+              className="hover:bg-primary-foreground"
+            >
+              <a
+                href={projectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Project <FaExternalLinkAlt className="ml-2" />
+              </a>
+            </Button>
+          </motion.div>
+        )}
       </div>
-      <div className="px-6 pt-4 pb-6">
-        <Button
-          onClick={() => window.open(projectUrl, '_blank', 'noopener,noreferrer')}
-          className="w-full group flex items-center justify-center"
-          variant="default"
+      <div className="p-4 flex-grow flex flex-col justify-between">
+        <div>
+          <h2 className="text-2xl font-bold mb-2 text-foreground">{title}</h2>
+          <p className="text-muted-foreground mb-4">{description}</p>
+        </div>
+        <motion.div
+          className="mt-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
         >
-          Visit Project
-          <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-        </Button>
+          <Button
+            asChild
+            variant="default"
+            className="w-full"
+          >
+            <a
+              href={projectUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Learn More <FaExternalLinkAlt className="ml-2" />
+            </a>
+          </Button>
+        </motion.div>
       </div>
     </motion.div>
   );
