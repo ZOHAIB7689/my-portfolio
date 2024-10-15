@@ -1,7 +1,6 @@
 "use client"
 import ProjectCard from '@/app/project-card/page';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 
 const ProjectsPage = () => {
   const projects = [
@@ -23,7 +22,7 @@ const ProjectsPage = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 mt-16">
       <h1 className="text-4xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
         My Projects
       </h1>

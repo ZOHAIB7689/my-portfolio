@@ -25,7 +25,7 @@ const imageVariants = {
 const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, imageSrc, projectUrl }) => {
   return (
     <motion.div
-      className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 transition-colors duration-300"
+      className="max-w-sm rounded-lg overflow-hidden shadow-lg dark:bg-gradient-to-l bg-slate-200 from-indigo-950 to-rose-950 transition-colors duration-300"
       variants={cardVariants}
       initial="initial"
       animate="animate"
@@ -50,7 +50,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, imageSrc,
         <Button
           onClick={() => window.open(projectUrl, '_blank', 'noopener,noreferrer')}
           className="w-full group flex items-center justify-center"
-          variant="outline"
+          variant="default"
         >
           Visit Project
           <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
