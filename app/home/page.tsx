@@ -12,8 +12,10 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [currentSkills, setCurrentSkills] = useState([0, 1]);
   const [currentHirePoints, setCurrentHirePoints] = useState([0, 1]);
+  const [currentSkill, setCurrentSkill] = useState(0);
   const hirePointsRef = useRef<(HTMLDivElement | null)[]>([]);
   const skillsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const skillRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => setMounted(true), []);
 
@@ -36,11 +38,28 @@ export default function Home() {
       });
     }, 5000);
 
+    const skillInterval = setInterval(() => {
+      setCurrentSkill((prevSkill) => (prevSkill + 1) % 3);
+    }, 3000);
+
     return () => {
       clearInterval(skillsInterval);
       clearInterval(hirePointsInterval);
+      clearInterval(skillInterval);
     };
   }, []);
+ 
+  useEffect(() => {
+    skillsRef.current.forEach((el, index) => {
+      if (el) {
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.5, delay: index * 0.2 }
+        );
+      }
+    });
+  }, [currentSkills]);
 
   useEffect(() => {
     hirePointsRef.current.forEach((el, index) => {
@@ -55,16 +74,14 @@ export default function Home() {
   }, [currentHirePoints]);
 
   useEffect(() => {
-    skillsRef.current.forEach((el, index) => {
-      if (el) {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.5, delay: index * 0.2 }
-        );
-      }
-    });
-  }, [currentSkills]);
+    if (skillRef.current) {
+      gsap.fromTo(
+        skillRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5 }
+      );
+    }
+  }, [currentSkill]);
 
   if (!mounted) return null;
 
@@ -105,6 +122,12 @@ export default function Home() {
       title: "Continuous Learning & Innovation",
       description: "Stay updated with emerging technologies and actively seek opportunities for growth."
     }
+  ];
+
+  const skill = [
+    { content: "AI Enthusiast" },
+    { content: "Full Stack Developer" },
+    { content: "UI/UX Designer" }
   ];
 
   const hirePoints = [
@@ -158,25 +181,22 @@ export default function Home() {
         }`}
       >
         {/* Hero Section */}
-        <section className="pt-24 pb-10 px-4">
-          <div className="container mx-auto text-center">
+        <div className="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-4 py-16">
+          <div className="md:w-1/2 mb-8 md:mb-0">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
+              className="text-center md:text-left"
             >
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">Zohaib</h1>
-              <h2
-                className={`text-2xl md:text-3xl mb-6 ${
-                  theme === "dark" ? "text-gray-400" : "text-muted-foreground"
-                }`}
-              >
-                Web Developer | UI/UX Designer | AI Enthusiast
-              </h2>
+              <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600 drop-shadow-lg">Zohaib</h1>
+              <div ref={skillRef} className="text-2xl md:text-3xl font-semibold mb-4 text-green-500 drop-shadow-md">
+                <h2>{skill[currentSkill].content}</h2>
+              </div>
               <p
-                className={`text-lg mb-8 max-w-2xl mx-auto ${
-                  theme === "dark" ? "text-gray-300" : "text-muted-foreground"
-                }`}
+                className={`text-lg mb-8 max-w-2xl ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-600"
+                } drop-shadow-sm`}
               >
                 Passionate about creating innovative web solutions, designing intuitive user interfaces,
                 and exploring the frontiers of artificial intelligence.
@@ -184,83 +204,79 @@ export default function Home() {
               <Button
                 asChild
                 size="lg"
-                className="font-mono text-lg text-white bg-gradient-to-bl from-purple-600 to-blue-600 hover:from-amber-500 hover:to-lime-700 duration-700 transition-all hover:scale-105"
+                className="font-mono text-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 <a href="#projects">Explore My Work</a>
               </Button>
             </motion.div>
           </div>
+
+          {/* Profile Image */}
+          <div className="md:w-1/2 flex justify-center">
+            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl">
+              <Image
+                src="/profile.jpg"
+                alt="Zohaib's profile picture"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          </div> 
+        </div>
+        {/* What I Do Section */}
+
+        <section className="py-16 px-4">
+          <h2 className="text-4xl font-bold mb-12 text-center drop-shadow-md">What I Do</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {currentSkills.map((skillIndex, index) => (
+              <div
+                key={skillIndex}
+                ref={(el) => {
+                  skillsRef.current[index] = el;
+                }}
+                className={`p-6 ${cardStyles} border-2 overflow-hidden rounded-lg hover:shadow-xl shadow-stone-800/50 dark:shadow-lime-400/10 transition-all duration-300`}
+              >
+                <h3 className="text-2xl text-blue-600 dark:text-blue-400 font-semibold mb-4 drop-shadow-sm">{skills[skillIndex].title}</h3>
+                <p className="text-gray-700 dark:text-gray-300 drop-shadow-sm">{skills[skillIndex].description}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
-        {/* Profile Image */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="container mx-auto text-center mt-12"
-        >
-          <div className="relative w-48 h-48 mx-auto rounded-full overflow-hidden">
-            <Image
-              src="/profile.jpg"
-              alt="Zohaib's profile picture"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
+        {/*  Hire Me Section */}
+        <section className="py-20 bg-gray-50 dark:bg-gray-900">
+          <div className="container mx-auto px-4">
+            <div className="relative mb-12 text-center">
+              <h2 className="text-4xl font-extrabold tracking-tight mb-4 drop-shadow-md">
+                Hire Me
+              </h2>
+              <span className="block mx-auto w-40 h-1 bg-blue-600"></span>
+            </div>
 
-          {/* What I Do Section */}
-          <section className="py-16 px-2">
-            <h2 className="text-4xl font-bold mb-8 text-center">What I Do</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {currentSkills.map((skillIndex, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto">
+              {currentHirePoints.map((pointIndex, index) => (
                 <div
-                  key={skillIndex}
+                  key={pointIndex}
                   ref={(el) => {
-                    skillsRef.current[index] = el;
+                    hirePointsRef.current[index] = el;
                   }}
-                  className={`p-6 ${cardStyles} border-2 overflow-hidden rounded-lg hover:shadow-lg shadow-stone-800/50 dark:shadow-lime-400/10 transition-all duration-300`}
+                  className={`flex items-start p-6 border-2 rounded-lg shadow-md hover:shadow-lg ${cardStyles} transition-all duration-300`}
                 >
-                  <h3 className="text-2xl text-sky-700 dark:text-sky-300 font-semibold mb-4">{skills[skillIndex].title}</h3>
-                  <p>{skills[skillIndex].description}</p>
+                  <div>
+                    <h3 className="text-2xl text-purple-700 dark:text-purple-400 font-semibold mb-2 drop-shadow-sm">
+                      {hirePoints[pointIndex].title}
+                    </h3>
+                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed drop-shadow-sm">
+                      {hirePoints[pointIndex].description}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
-          </section>
-
-          {/*  Hire Me Section */}
-          <section className="py-20 bg-gray-50 dark:bg-gray-900">
-            <div className="container mx-auto px-4">
-              <div className="relative mb-12 text-center">
-                <h2 className="text-4xl font-extrabold tracking-tight mb-4">
-                 Hire Me
-                </h2>
-                <span className="block mx-auto w-40 h-1 bg-blue-600"></span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                {currentHirePoints.map((pointIndex, index) => (
-                  <div
-                    key={pointIndex}
-                    ref={(el) => {
-                      hirePointsRef.current[index] = el;
-                    }}
-                    className={`flex items-start p-6 border-2 rounded-lg shadow-md hover:shadow-lime-400/10 ${cardStyles}`}
-                  >
-                    <div>
-                      <h3 className="text-2xl text-green-800 dark:text-green-300 font-semibold mb-2">
-                        {hirePoints[pointIndex].title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed dark:text-orange-300">
-                        {hirePoints[pointIndex].description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        </motion.div>
+          </div>
+        </section>
+      
       </main>
     </div>
   );
