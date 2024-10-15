@@ -60,7 +60,6 @@ logs
 
 # Optional: Gatsby files
 .cache/
-public
 
 # Optional: macOS
 .AppleDouble
