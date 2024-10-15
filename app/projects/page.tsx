@@ -1,5 +1,5 @@
 "use client"
-import ProjectCard from '@/app/project-card/page';
+import ProjectCard from '@/components/ProjectCard';
 import { motion } from 'framer-motion';
 
 const ProjectsPage = () => {
