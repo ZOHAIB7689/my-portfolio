@@ -1,22 +1,23 @@
-"use client"
+"use client";
+
 import ProjectCard from '@/components/ProjectCard';
 import { motion } from 'framer-motion';
 
 const ProjectsPage = () => {
   const projects = [
     {
-      title: "Coming soon",
-      description: "as this portfolio is at initial position i will bring them soon",
-      imageSrc: "/project-01.png",
-      projectUrl: "https://project1.com",
-      color: "bg-gradient-to-r from-purple-500/50 to-pink-500/50"
+      title: "Quran Learning Hub",
+      description: "I developed Quranic Wisdom Hub, an interactive project aimed at enhancing Quran learning for all ages. This platform features structured courses like Quran Basics, Tajweed Essentials, and Kids Tajweed, along with engaging webinars. Built using Next.js and Tailwind CSS, the project emphasizes a user-friendly design to provide an enriching learning experience.",
+      imageSrc: "/quran-school.jpg",
+      projectUrl: "https://quranic-wisdom-hub.vercel.app/",
+      color: "bg-gradient-to-r from-teal-400 to-blue-500"
     },
     {
-      title: "Demo",
-      description: "this is just a demo i will add them soon",
+      title: "Demo Project",
+      description: "This is just a demo; I will add more details soon.",
       imageSrc: "/project-02.png",
       projectUrl: "https://project2.com",
-      color: "bg-gradient-to-r from-green-400/50 to-blue-500/50"
+      color: "bg-gradient-to-r from-yellow-400 to-red-500"
     },
     // Add more projects as needed
   ];
@@ -30,12 +31,12 @@ const ProjectsPage = () => {
         {projects.map((project, index) => (
           <motion.div
             key={index}
-            whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}
+            whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(0,0,0,0.2)" }}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
-            className={`${project.color} rounded-lg overflow-hidden transform transition duration-300`}
+            className={`${project.color} rounded-lg overflow-hidden transform transition duration-300 shadow-lg`}
           >
             <ProjectCard
               title={project.title}
@@ -48,6 +49,6 @@ const ProjectsPage = () => {
       </div>
     </div>
   );
-};
+};         
 
 export default ProjectsPage;

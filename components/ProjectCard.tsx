@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { FaExternalLinkAlt } from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa'; // You can change this to a different icon if desired
 
 interface ProjectCardProps {
   title: string;
@@ -17,9 +17,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, imageSrc,
 
   return (
     <motion.div
-      className="bg-card dark:bg-gradient-to-l from-indigo-950 to-rose-950 border-2 border-emerald-950 shadow-lg rounded-lg overflow-hidden flex flex-col h-full"
-      whileHover={{ scale: 1.05 }}
-      transition={{ duration: 0.3 }}
+      className="bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-800 dark:to-gray-700 border border-gray-400 shadow-lg rounded-lg overflow-hidden flex flex-col h-full transition-transform duration-300 ease-in-out hover:shadow-xl hover:scale-105"
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
@@ -27,9 +25,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, imageSrc,
         <motion.img
           src={imageSrc}
           alt={title}
-          className="w-full h-48 object-cover"
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.3 }}
+          className="w-full h-48 object-cover transition-transform duration-300 ease-in-out hover:scale-110"
         />
         {isHovered && (
           <motion.div
@@ -40,24 +36,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, imageSrc,
           >
             <Button
               asChild
-              variant="secondary"
-              className="hover:bg-primary-foreground"
+              variant="default"
+              className="rounded-full bg-blue-600 hover:bg-blue-500 transition-colors duration-200"
             >
               <a
                 href={projectUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="text-white text-lg font-semibold flex items-center"
               >
-                View Project <FaExternalLinkAlt className="ml-2" />
+                Explore <FaArrowRight className="ml-2 hover:scale-110 transition-transform duration-200" />
               </a>
             </Button>
           </motion.div>
         )}
       </div>
-      <div className="p-4 flex-grow flex flex-col justify-between">
+      <div className="p-6 flex-grow flex flex-col justify-between">
         <div>
-          <h2 className="text-2xl font-bold mb-2 text-foreground">{title}</h2>
-          <p className="text-muted-foreground mb-4">{description}</p>
+          <h2 className="text-2xl font-bold mb-2 text-gray-800 dark:text-gray-100">{title}</h2>
+          <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">{description}</p>
         </div>
         <motion.div
           className="mt-auto"
@@ -67,15 +64,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, imageSrc,
         >
           <Button
             asChild
-            variant="default"
-            className="w-full"
+            variant="outline"
+            className="w-full rounded-full border-gray-600 dark:border-gray-300 hover:bg-blue-600 dark:hover:bg-indigo-600 transition-colors duration-200"
           >
             <a
               href={projectUrl}
               target="_blank"
               rel="noopener noreferrer"
+              className="flex justify-center items-center text-lg font-semibold text-gray-800 dark:text-gray-100"
             >
-              Learn More <FaExternalLinkAlt className="ml-2" />
+              Explore <FaArrowRight className="ml-2 hover:scale-110 transition-transform duration-200" />
             </a>
           </Button>
         </motion.div>
@@ -85,4 +83,3 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, imageSrc,
 };
 
 export default ProjectCard;
-                
