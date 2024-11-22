@@ -183,7 +183,9 @@ const HomePage: React.FC = () => {
                 <Button className="bg-teal-600 hover:bg-teal-700 px-6 py-6">
                   View Projects <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
-                <Button variant="outline" className="border-teal-600 text-teal-600 hover:bg-teal-50 px-6 py-6">
+                <Button
+                onClick={() => window.open("mailto:bzohaib754@gmail.com?subject=Contact Inquiry")}
+                 variant="outline" className="border-teal-600 text-teal-600 hover:bg-teal-50 px-6 py-6">
                   Contact Me <Mail className="ml-2 w-4 h-4" />
                 </Button>
               </motion.div>
