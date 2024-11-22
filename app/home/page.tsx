@@ -159,7 +159,7 @@ const HomePage: React.FC = () => {
                   transition={{ delay: 0.4 }}
                   className="text-6xl font-bold text-gray-900 tracking-tight"
                 >
-                  Hi, I'm Zohaib
+                  Hi, I&apos;m Zohaib
                 </motion.h1>
                 <TypewriterText words={professions} />
                 <motion.p

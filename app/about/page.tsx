@@ -129,7 +129,7 @@ const AboutPage = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Learning Path</h2>
-            <p className="text-gray-600">Technologies and skills I'm currently mastering</p>
+            <p className="text-gray-600">Technologies and skills I&apos;m currently mastering</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -206,7 +206,7 @@ const AboutPage = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Future Vision</h2>
-            <p className="text-gray-600">Where I'm headed in my development journey</p>
+            <p className="text-gray-600">Where I&apos;m headed in my development journey</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8">
