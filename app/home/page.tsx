@@ -1,283 +1,390 @@
-"use client";
+'use client'
 
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import { useTheme } from "next-themes";
+
+
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { gsap } from "gsap";
+import { Badge } from "@/components/ui/badge";
+import { 
+  Code2, 
+  Palette, 
+  Brain,
+  ArrowRight,
+  Trophy,
+  ArrowDownCircle,
+  Github,
+  Twitter,
+  Linkedin,
+  ExternalLink,
+  Mail,
+  
+} from "lucide-react";
+import Link from 'next/link';
 
-export default function Home() {
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  const [currentSkills, setCurrentSkills] = useState([0, 1]);
-  const [currentHirePoints, setCurrentHirePoints] = useState([0, 1]);
-  const [currentSkill, setCurrentSkill] = useState(0);
-  const hirePointsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const skillsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const skillRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => setMounted(true), []);
+interface TypewriterTextProps {
+  words: string[];
+}
 
+const TypewriterText: React.FC<TypewriterTextProps> = ({ words }) => {
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  
   useEffect(() => {
-    const skillsInterval = setInterval(() => {
-      setCurrentSkills((prevSkills) => {
-        const newSkills = [...prevSkills];
-        newSkills[0] = (newSkills[0] + 2) % 8;
-        newSkills[1] = (newSkills[1] + 2) % 8;
-        return newSkills;
-      });
-    }, 5000);
-
-    const hirePointsInterval = setInterval(() => {
-      setCurrentHirePoints((prevPoints) => {
-        const newPoints = [...prevPoints];
-        newPoints[0] = (newPoints[0] + 2) % 10;
-        newPoints[1] = (newPoints[1] + 2) % 10;
-        return newPoints;
-      });
-    }, 5000);
-
-    const skillInterval = setInterval(() => {
-      setCurrentSkill((prevSkill) => (prevSkill + 1) % 3);
-    }, 3000);
-
-    return () => {
-      clearInterval(skillsInterval);
-      clearInterval(hirePointsInterval);
-      clearInterval(skillInterval);
-    };
-  }, []);
- 
-  useEffect(() => {
-    skillsRef.current.forEach((el, index) => {
-      if (el) {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.5, delay: index * 0.2 }
-        );
-      }
-    });
-  }, [currentSkills]);
-
-  useEffect(() => {
-    hirePointsRef.current.forEach((el, index) => {
-      if (el) {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 50 },
-          { opacity: 1, y: 0, duration: 0.5, delay: index * 0.2 }
-        );
-      }
-    });
-  }, [currentHirePoints]);
-
-  useEffect(() => {
-    if (skillRef.current) {
-      gsap.fromTo(
-        skillRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5 }
-      );
-    }
-  }, [currentSkill]);
-
-  if (!mounted) return null;
-
-  const cardStyles = theme === "dark" 
-    ? "bg-gradient-to-t from-gray-950 to-red-950 border-t-red-700 border-b-gray-700"
-    : "bg-gradient-to-t from-white to-gray-100 border-t-gray-300 border-b-gray-400";
-
-  const skills = [
-    {
-      title: "Web Development",
-      description: "Build responsive, fast, and user-friendly web applications using HTML, CSS, JavaScript, and React/Next.js."
-    },
-    {
-      title: "Backend Integration",
-      description: "Develop scalable backends with Node.js and manage data using MongoDB and RESTful APIs."
-    },
-    {
-      title: "AI-Powered Solutions",
-      description: "Explore and integrate AI tools into projects to enhance automation and user experience."
-    },
-    {
-      title: "Web3 & Blockchain Concepts",
-      description: "Familiar with Web3 technologies, blockchain fundamentals, and decentralized applications."
-    },
-    {
-      title: "UI/UX Design Principles",
-      description: "Create intuitive wireframes and prototypes that balance functionality with aesthetics."
-    },
-    {
-      title: "Metaverse Development",
-      description: "Contribute to projects focused on metaverse ecosystems, bridging physical and virtual realities."
-    },
-    {
-      title: "Collaborative Problem-Solving",
-      description: "Work effectively in team environments and participate in hackathons to solve real-world problems."
-    },
-    {
-      title: "Continuous Learning & Innovation",
-      description: "Stay updated with emerging technologies and actively seek opportunities for growth."
-    }
-  ];
-
-  const skill = [
-    { content: "AI Enthusiast" },
-    { content: "Full Stack Developer" },
-    { content: "UI/UX Designer" }
-  ];
-
-  const hirePoints = [
-    {
-      title: "Full-Stack Web Development",
-      description: "Expertise in both frontend (React, Next.js) and backend (Node.js, MongoDB)."
-    },
-    {
-      title: "AI-Integrated Solutions",
-      description: "Use AI tools to automate workflows and enhance user experience."
-    },
-    {
-      title: "Web3 & Blockchain Projects",
-      description: "Familiar with decentralized applications (dApps) and blockchain technology."
-    },
-    {
-      title: "Metaverse Enthusiast",
-      description: "Experience contributing to virtual reality and metaverse projects."
-    },
-    {
-      title: "UI/UX Focused",
-      description: "Design user-friendly, intuitive interfaces with a focus on functionality."
-    },
-    {
-      title: "Proactive & Fast Learner",
-      description: "Stay updated with the latest trends and adapt quickly to new technologies."
-    },
-    {
-      title: "Collaborative Problem Solver",
-      description: "Work well in team environments with clear communication."
-    },
-    {
-      title: "Hackathon Experience",
-      description: "Build real-world solutions under pressure and tight deadlines."
-    },
-    {
-      title: "Current Role",
-      description: "Serving at the Governor's IT Initiative for AI, Web3, and Metaverse projects."
-    },
-    {
-      title: "Result-Driven & Professional",
-      description: "Focus on delivering high-impact solutions aligned with project goals."
-    }
-  ];
+    const interval = setInterval(() => {
+      setCurrentWordIndex((prev) => (prev + 1) % words.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [words]);
 
   return (
-    <div className="mt-12">
-      <main
-        className={`min-h-screen transition-colors duration-300 ${
-          theme === "dark" ? "bg-gray-900 text-white" : "bg-background text-foreground"
-        }`}
-      >
-        {/* Hero Section */}
-        <div className="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-4 py-16">
-          <div className="md:w-1/2 mb-8 md:mb-0">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-center md:text-left"
-            >
-              <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600 drop-shadow-lg">Zohaib</h1>
-              <div ref={skillRef} className="text-2xl md:text-3xl font-semibold mb-4 text-green-500 drop-shadow-md">
-                <h2>{skill[currentSkill].content}</h2>
-              </div>
-              <p
-                className={`text-lg mb-8 max-w-2xl ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-600"
-                } drop-shadow-sm`}
-              >
-                Passionate about creating innovative web solutions, designing intuitive user interfaces,
-                and exploring the frontiers of artificial intelligence.
-              </p>
-              <Button
-                asChild
-                size="lg"
-                className="font-mono text-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
-              >
-                <a href="#projects">Explore My Work</a>
-              </Button>
-            </motion.div>
-          </div>
-
-          {/* Profile Image */}
-          <div className="md:w-1/2 flex justify-center">
-            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl">
-              <Image
-                src="/profile.jpg"
-                alt="Zohaib's profile picture"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          </div> 
-        </div>
-        {/* What I Do Section */}
-
-        <section className="py-16 px-4">
-          <h2 className="text-4xl font-bold mb-12 text-center drop-shadow-md">What I Do</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {currentSkills.map((skillIndex, index) => (
-              <div
-                key={skillIndex}
-                ref={(el) => {
-                  skillsRef.current[index] = el;
-                }}
-                className={`p-6 ${cardStyles} border-2 overflow-hidden rounded-lg hover:shadow-xl shadow-stone-800/50 dark:shadow-lime-400/10 transition-all duration-300`}
-              >
-                <h3 className="text-2xl text-blue-600 dark:text-blue-400 font-semibold mb-4 drop-shadow-sm">{skills[skillIndex].title}</h3>
-                <p className="text-gray-700 dark:text-gray-300 drop-shadow-sm">{skills[skillIndex].description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/*  Hire Me Section */}
-        <section className="py-20 bg-gray-50 dark:bg-gray-900">
-          <div className="container mx-auto px-4">
-            <div className="relative mb-12 text-center">
-              <h2 className="text-4xl font-extrabold tracking-tight mb-4 drop-shadow-md">
-                Hire Me
-              </h2>
-              <span className="block mx-auto w-40 h-1 bg-blue-600"></span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto">
-              {currentHirePoints.map((pointIndex, index) => (
-                <div
-                  key={pointIndex}
-                  ref={(el) => {
-                    hirePointsRef.current[index] = el;
-                  }}
-                  className={`flex items-start p-6 border-2 rounded-lg shadow-md hover:shadow-lg ${cardStyles} transition-all duration-300`}
-                >
-                  <div>
-                    <h3 className="text-2xl text-purple-700 dark:text-purple-400 font-semibold mb-2 drop-shadow-sm">
-                      {hirePoints[pointIndex].title}
-                    </h3>
-                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed drop-shadow-sm">
-                      {hirePoints[pointIndex].description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      
-      </main>
+    <div className="h-8 overflow-hidden">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentWordIndex}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -20, opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-teal-600 font-semibold  text-xl"
+          >
+          {words[currentWordIndex]}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
+};
+
+interface SkillCardProps {
+  icon: React.ReactNode;
+  name: string;
+  level: number;
 }
+
+const SkillCard: React.FC<SkillCardProps> = ({ icon, name, level }) => (
+  <motion.div
+    whileHover={{ y: -5 }}
+    className="relative"
+  >
+    <Card className="overflow-hidden border-2 border-transparent hover:shadow-lg hover:shadow-amber-300/30 bg-gray-700/70 backdrop:blur-lg hover:border-teal-500 transition-colors">
+      <CardContent className="p-6 text-center">
+        <div className="mb-4 text-teal-400 flex justify-center">
+          {icon}
+        </div>
+        <h3 className="text-xl text-gray-300 font-semibold mb-2">{name}</h3>
+        <div className="w-full bg-gray-200 h-2 rounded-full">
+          <div 
+            className="bg-teal-500 h-full rounded-full transition-all duration-1000"
+            style={{ width: `${level}%` }}
+          />
+        </div>
+      </CardContent>
+    </Card>
+  </motion.div>
+);
+
+const HomePage: React.FC = () => {
+  const professions = [
+    "Web Developer",
+    "UI/UX Designer",
+    "AI Enthusiast",
+    "Full Stack Developer"
+  ];
+
+  const skills = [
+    { name: "Web Development", icon: <Code2 className="w-8 h-8" />, level: 90 },
+    { name: "UI/UX Design", icon: <Palette className="w-8 h-8" />, level: 85 },
+    { name: "AI Development", icon: <Brain className="w-8 h-8" />, level: 75 },
+  ];
+  
+  const projects = [
+    { 
+      title: "LUMHS Quiz test",
+      description: "LUMHS quiz test application with a beautiful sleek designing",
+      tags: ["Next.js", "TailwindCSS", "Aceternity"],
+      link: "https://lumhs-quiz-test.vercel.app/",
+      sourceCode: "https://github.com/ZOHAIB7689/lumhs-quiz-test"
+    },
+    { 
+      title: "Quranic widom hub",
+      description: "Online Quran learning school with a beautiful UI integration ",
+      tags: ["Next.js", "Aceternity", "shadcn"],
+      link: "https://quranic-wisdom-hub.vercel.app/",
+      sourceCode: "https://github.com/ZOHAIB7689/quranic-wisdom-hub"
+    },
+    { 
+      title: "Portfolio Template",
+      description: "Customizable portfolio system",
+      tags: ["Next.js", "Framer Motion", "GSAP"],
+      link: "#",
+      sourceCode: "https://github.com/ZOHAIB7689/portfolio-template"
+    },
+  ];
+
+  
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Enhanced Hero Section */}
+      <motion.section 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="min-h-screen flex items-center relative overflow-hidden"
+        >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(20,184,166,0.1),transparent)]" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-6"
+              >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                >
+                <Badge className="bg-teal-100 text-teal-800 text-sm px-3 py-1">
+                  Available for Freelance Projects
+                </Badge>
+              </motion.div>
+
+              <div className="space-y-2">
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="text-6xl font-bold text-gray-900 tracking-tight"
+                >
+                  Hi, I'm Zohaib
+                </motion.h1>
+                <TypewriterText words={professions} />
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="text-gray-600 max-w-lg mt-6 leading-relaxed text-lg"
+                >
+                  Crafting digital experiences that blend creativity with 
+                  cutting-edge technology. Specialized in modern web development 
+                  and AI integration.
+                </motion.p>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="flex gap-4 pt-6"
+              >
+                <Button className="bg-teal-600 hover:bg-teal-700 px-6 py-6">
+                  View Projects <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+                <Button variant="outline" className="border-teal-600 text-teal-600 hover:bg-teal-50 px-6 py-6">
+                  Contact Me <Mail className="ml-2 w-4 h-4" />
+                </Button>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 }}
+                className="flex gap-4 pt-6"
+              >
+                {[Github, Twitter, Linkedin].map((Icon, index) => (
+                  <motion.a
+                    key={index}
+                    href={index === 0 ? "https://github.com/ZOHAIB7689" : (index === 2 ? "https://www.linkedin.com/in/zohaib-baloch-78974b2b5/" : "#")}
+                    whileHover={{ y: -5 }}
+                    className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-teal-100 hover:text-teal-600 transition-colors"
+                  >
+                    <Icon className="w-5 h-5" />
+                  </motion.a>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            {/* Right Content - Profile Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+              >
+              <div className="relative">
+                {/* Background Circles */}
+                <motion.div
+                  animate={{ 
+                    rotate: 360,
+                    scale: [1, 1.1, 1],
+                  }}
+                  transition={{ 
+                    duration: 20,
+                    repeat: Infinity,
+                    repeatType: "reverse"
+                  }}
+                  className="absolute inset-0 bg-gradient-to-r from-teal-200 to-teal-100 rounded-full blur-3xl opacity-20"
+                  />
+                
+                {/* Profile Image */}
+                <div className="relative w-[400px] h-[400px] mx-auto">
+                  <img 
+                    src="/profile.jpg"
+                    alt="Zohaib"
+                    className="w-full h-full rounded-full object-cover border-8 border-white shadow-2xl"
+                    />
+                  
+                  {/* Floating Achievement Cards */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.2 }}
+                    className="absolute -left-16 top-1/2 transform -translate-y-1/2"
+                    >
+                    <Card className="shadow-xl">
+                      <CardContent className="p-4">
+                        <div className="flex items-center gap-3">
+                          <Trophy className="w-8 h-8 text-yellow-500" />
+                          <div>
+                            <p className="font-semibold">Best Developer</p>
+                            <p className="text-sm text-gray-500">2024 Award</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.4 }}
+                    className="absolute -right-16 top-1/2 transform  -translate-y-1/2"
+                  >
+                    <Card className="shadow-xl">
+                      <CardContent className="p-4">
+                        <div className="text-center">
+                          <p className="text-2xl font-bold text-teal-600">Multiple</p>
+                          <p className="text-sm text-gray-500">Projects Delivered</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.6 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            <ArrowDownCircle className="w-6 h-6 text-teal-600" />
+          </motion.div>
+        </motion.div>
+      </motion.section>
+
+      {/* Skills Section */}
+      <motion.section 
+        className="py-20 px-4  bg-[url('/download.jpeg')] bg-no-repeat bg-center bg-cover md:px-8"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <Badge className="bg-teal-100 text-teal-800 mb-4">Skills & Expertise</Badge>
+            <h2 className="text-4xl font-bold text-orange-400 mb-4">Technical Proficiency</h2>
+            <p className="text-zinc-200 max-w-2xl mx-auto">
+              Mastering the latest technologies to create seamless digital experiences
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3  gap-8">
+            {skills.map((skill, index) => (
+              <SkillCard  key={index} {...skill} />
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Featured Projects Section */}
+      <motion.section 
+        className="py-20 px-4 md:px-8 bg-gray-50"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <Badge className="bg-teal-100 text-teal-800 mb-4">Portfolio</Badge>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Projects</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              A showcase of my best work combining design, technology, and innovation
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {projects.map((project, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -5 }}
+              >
+                <Card className="overflow-hidden  hover:shadow-lime-400/50 shadow-lg duration-200">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                    <p className="text-gray-600 mb-4">{project.description}</p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tags.map((tag, i) => (
+                        <Badge key={i} className="bg-teal-100 text-teal-800">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                    <div className="flex gap-4 pt-6">
+                      <Button
+                        variant="outline" 
+                        className="w-full border-teal-600 text-teal-600 hover:bg-teal-50"
+                        onClick={() => window.open(project.link, "_blank")}
+                        >
+                        View Project <ExternalLink className="ml-2 w-4 h-4" />
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        className="w-full border-teal-600 text-teal-600 hover:bg-teal-50"
+                        onClick={() => window.open(project.sourceCode, "_blank")}
+                      >
+                        Source Code <Github className="ml-2 w-4 h-4" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+           <Link href="/projects"> <Button 
+            className="bg-teal-600 hover:bg-teal-700">
+              View All Projects <ArrowRight className="ml-2 w-4 h-4" />
+            </Button></Link>
+          </div>
+        </div>
+      </motion.section>
+    </div>
+  );
+};
+
+export default HomePage;

@@ -25,7 +25,7 @@ export default function ContactPage() {
       transition={{ duration: 0.5 }}
       className="container mt-12 mx-auto px-4 py-8"
     >
-      <h1 className="text-4xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">Get in Touch</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center text-teal-700">Get in Touch</h1>
       <p className="mb-8 text-center text-lg">I&apos;d love to hear from you! Feel free to reach out through the form below or connect via social media.</p>
 
       <div className="grid md:grid-cols-2 gap-12">
@@ -91,10 +91,7 @@ export default function ContactPage() {
             <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" className="text-4xl hover:text-primary transition-all duration-300 ease-in-out transform hover:scale-110">
               <FaLinkedin />
             </a>
-            <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer" className="text-4xl hover:text-primary transition-all duration-300 ease-in-out transform hover:scale-110">
-              <FaTwitter />
-            </a>
-            <a href="mailto:your.email@example.com" className="text-4xl hover:text-primary transition-all duration-300 ease-in-out transform hover:scale-110">
+            <a href="mailto:bzohaib754@gmail.com" className="text-4xl hover:text-primary transition-all duration-300 ease-in-out transform hover:scale-110">
               <FaEnvelope />
             </a>
           </div>
