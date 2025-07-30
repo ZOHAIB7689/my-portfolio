@@ -22,11 +22,11 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/about' },
-    { label: 'Skills', href: '/skills' },
-    { label: 'Projects', href: '/projects' },
-    { label: 'Contact', href: '/contact' },
+    { label: 'Home', href: '#home' },
+    { label: 'About', href: '#about' },
+    { label: 'Skills', href: '#skills' },
+    { label: 'Projects', href: '#projects' },
+    { label: 'Contact', href: '#contact' },
   ];
 
   return (
@@ -60,6 +60,7 @@ const Navbar = () => {
                 <motion.a
                   key={item.label}
                   href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className="text-white/90 hover:text-white transition-colors relative group"
                   whileHover={{ y: -2 }}
                 >

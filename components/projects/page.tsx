@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion,  } from 'framer-motion';
-import { Moon, Code, Layout, Globe, Sparkles, ExternalLink, Github, ArrowRight } from 'lucide-react';
+import { Moon, Code, Layout, Globe, Sparkles,BrainCircuit, ExternalLink, Github, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -24,6 +24,7 @@ const ProjectsPage = () => {
 
   type Projects = {
     web: Project[];
+    ai: Project[],
     backend: Project[];
     ui: Project[];
   };
@@ -74,7 +75,8 @@ const ProjectsPage = () => {
 
   const categories = [
     { id: 'web', icon: Globe, label: 'Web Apps' },
-    { id: 'backend', icon: Code, label: 'Backend Projects' }, // Changed backend icon to Code
+    { id: 'ai', icon: BrainCircuit, label: 'AI ' },
+    { id: 'backend', icon: Code, label: 'CLI Tools' }, // Changed backend icon to Code
     { id: 'ui', icon: Layout, label: 'UI/UX' },
   ];
 
@@ -90,6 +92,14 @@ const ProjectsPage = () => {
         sourceCode: "https://github.com/ZOHAIB7689s/quranic-wisdom-hub", // Added sourceCode
       },
       {
+        title: "Comforty",
+        description: " Full Stack E-commerce app for chairs ",
+        tags: ["Sanity", "Next.js", "Tailwindcss", ],
+        image: "/comforty.PNG",
+        link: "https://quranic-wisdom-hub.vercel.app/", // Added link
+        sourceCode: "https://github.com/ZOHAIB7689s/quranic-wisdom-hub", // Added sourceCode
+      },
+      {
         title: "LUMHS quiz test",
         description: "Medical college quiz tes",
         tags: ["Next.js", "shadcn", "Tailwindcss"],
@@ -97,6 +107,17 @@ const ProjectsPage = () => {
         link: "https://example.com/social-media-dashboard", // Added link
         sourceCode: "https://github.com/ZOHAIB7689/lumhs-quiz-test", // Added sourceCode
       }
+    ],ai:[
+      {
+        title: "Hidaya Ai",
+        description: "An ai powered hadith finder app",
+        tags: ["Crewai", "Streamlit", "Python"],
+        image: "/hadees.jpeg",
+        featured: true,
+        link: "https://hadees.streamlit.app/", // Added link
+        sourceCode: "https://github.com/ZOHAIB7689s/hadith-hub", // Added sourceCode
+      },
+      
     ],
     backend: [
       {

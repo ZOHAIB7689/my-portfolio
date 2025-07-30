@@ -27,10 +27,11 @@ const SkillsPage = () => {
 
   const categories: Category[] = [
     { id: 'all', name: 'All Skills' },
+    { id: 'ai', name:"Agentic AI"},
     { id: 'frontend', name: 'Frontend' },
     { id: 'backend', name: 'Backend' },
     { id: 'design', name: 'Design' },
-    { id: 'devops', name: 'DevOps' }
+    { id: 'devops', name: 'DevOps' },
   ];
 
   const skills: Record<string, Skill[]> = {

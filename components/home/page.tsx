@@ -350,7 +350,7 @@ const HomePage: React.FC = () => {
                     <p className="text-gray-600 mb-4">{project.description}</p>
                     <div className="flex flex-wrap gap-2 mb-4">
                       {project.tags.map((tag, i) => (
-                        <Badge key={i} className="bg-teal-100 text-teal-800">
+                        <Badge key={i} className="bg-teal-100 hover:bg-blue-200 hover:text-red-800 hover:scale-110 duration-200 hover:cursor-arrow text-teal-800">
                           {tag}
                         </Badge>
                       ))}
