@@ -7,10 +7,10 @@ import ProjectsPage from "@/components/projects/page"
 import ContactPage from "@/components/contact/page"
 import HomePage from "@/components/home/page"
 // about/page.tsx
-export const metadata = {
-  title: "About Zohaib | Full Stack Developer",
-  description: "Learn more about Zohaib, a full stack developer with a passion for web & AI.",
-};
+// export const metadata = {
+//   title: "About Zohaib | Full Stack Developer",
+//   description: "Learn more about Zohaib, a full stack developer with a passion for web & AI.",
+// };
 
 
 export default function Home() {

@@ -121,7 +121,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t py-8 text-center">
           <p className="text-gray-600 flex items-center justify-center">
-            Made with <Heart className="w-4 h-4 mx-2 text-red-500 fill-current" /> by
+            <span className='text-rose-300 font-semibold mr-1'>Designed</span> and <span className='font-semibold text-fuchsia-500 mr-1 ml-1'>Build</span> with <Heart className="w-4 h-4 mx-2 text-red-500 fill-current" /> by
             <span className="font-semibold ml-1">Zohaib</span>
           </p>
         </div>
