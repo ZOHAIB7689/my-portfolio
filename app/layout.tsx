@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: "Zohaib's Portfolio | Web & AI Developer",
     description:
       "Explore Zohaib's portfolio showcasing expertise in Next.js, TypeScript, Python, and Agentic AI.",
-    url: "https://your-portfolio-url.com",
+    url: "https://zohaib-portfolio-7689.vercel.app/",
     type: "website",
     locale: "en_US",
     siteName: "Zohaib's Portfolio",
